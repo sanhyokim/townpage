@@ -3,8 +3,10 @@
 タウンページのページ画像から抽出した掲載店リストを、書籍ID・ページごとに CSV で保存します。
 
 ```
-data/<BOOK_ID>/pageNNN.csv     例: data/202502_391646/page032.csv
+data/<EDITION>/pageNNN.csv     例: data/fukuoka/page032.csv
 ```
+
+`<EDITION>` は `fukuoka`（福岡版）/ `kitakyusyu`（北九州・筑豊版）/ `chikugo`（筑後・鳥栖版）。
 
 `NNN` は **紙面に印刷されているページ番号**（3桁ゼロ埋め）です。
 

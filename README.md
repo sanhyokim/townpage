@@ -91,9 +91,17 @@ errors, and validates that each response is really a JPEG (the server returns a
 ダウンロードしたページ画像を業種別リスト（CSV）に変換する作業用のフォルダ構成:
 
 ```
-images/<BOOK_ID>/el_<PAGE>.jpg   ← 処理したいページ画像をここにコミットする
-data/<BOOK_ID>/pageNNN.csv      ← 抽出結果（紙面の印刷ページ番号ごと）
+images/<EDITION>/el_<PAGE>.jpg   ← 処理したいページ画像をここにコミットする
+data/<EDITION>/pageNNN.csv      ← 抽出結果（紙面の印刷ページ番号ごと）
 ```
+
+`<EDITION>` は版ごとのフォルダ（ファイル名が版間で重複するため分ける）:
+
+| EDITION      | 版                          | BOOK_ID         |
+|--------------|------------------------------|-----------------|
+| `fukuoka`    | 福岡県福岡版                 | `202502_391646` |
+| `kitakyusyu` | 福岡県北九州・筑豊版         | `202508_392644` |
+| `chikugo`    | 福岡県筑後・佐賀県鳥栖版     | `202508_392643` |
 
 - 画像は `download.sh` / `download.ps1` の出力（`out/`）からそのままコピーして
   コミットしてよい（el サイズで1冊 ~250 MB。GitHub の上限内）。
