@@ -24,16 +24,26 @@ SIZE="${SIZE:-el}"
 OUTDIR="${OUTDIR:-./out}"
 PAR="${PAR:-6}"
 
-# Default set of books (id => human label is informational only)
+# Fallback set of books, used only when no CLI args and no books.txt is present
 BOOKS_DEFAULT=(
   "202502_391646"   # タウンページ 福岡県福岡版
   "202508_392644"   # タウンページ 福岡県北九州・筑豊版
   "202508_392643"   # タウンページ 福岡県筑後・佐賀県鳥栖版
 )
 
-# Books to process: CLI args override the default list
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BOOKS_FILE="${BOOKS_FILE:-$SCRIPT_DIR/books.txt}"
+
+# Books to process, in priority order:
+#   1) CLI args           ./download.sh 202502_391646 ...
+#   2) books.txt          one id per line ('#' starts a comment)
+#   3) BOOKS_DEFAULT
 if [ "$#" -gt 0 ]; then
   BOOKS=("$@")
+elif [ -f "$BOOKS_FILE" ]; then
+  # take the first whitespace-delimited token of each non-comment, non-blank line
+  mapfile -t BOOKS < <(sed -e 's/#.*//' "$BOOKS_FILE" | awk 'NF{print $1}')
+  echo "Loaded ${#BOOKS[@]} book id(s) from $BOOKS_FILE"
 else
   BOOKS=("${BOOKS_DEFAULT[@]}")
 fi

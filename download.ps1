@@ -20,13 +20,28 @@
 #>
 
 param(
-  [string[]]$Books = @('202502_391646','202508_392644','202508_392643'),
+  [string[]]$Books,
   [string]$Size = 'el',
   [string]$OutDir = '.\out',
+  [string]$BooksFile,
   [string]$Host_ = 'https://www.denwacho.ne.jp/ebook'
 )
 
 $ErrorActionPreference = 'Stop'
+
+# Book list priority: 1) -Books arg  2) books.txt  3) built-in fallback
+if (-not $Books -or $Books.Count -eq 0) {
+  if (-not $BooksFile) { $BooksFile = Join-Path $PSScriptRoot 'books.txt' }
+  if (Test-Path $BooksFile) {
+    $Books = Get-Content $BooksFile |
+      ForEach-Object { ($_ -replace '#.*','').Trim() } |
+      Where-Object { $_ -ne '' } |
+      ForEach-Object { ($_ -split '\s+')[0] }
+    Write-Host "Loaded $($Books.Count) book id(s) from $BooksFile"
+  } else {
+    $Books = @('202502_391646','202508_392644','202508_392643')
+  }
+}
 # denwacho requires TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 

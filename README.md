@@ -29,6 +29,19 @@ Available sizes (from each book's `books/db/dbook.xml` `<pagesizes>`):
 The total page count is read live from each book's `dbook.xml`, so nothing is
 hard‑coded.
 
+## Batch list (`books.txt`)
+
+The books to download are listed in **`books.txt`** — one book id per line
+(`#` starts a comment). Both scripts read it automatically when you don't pass
+ids on the command line. To change what gets downloaded, just edit `books.txt`.
+
+Priority order for the book list: command-line ids → `books.txt` → a small
+built-in fallback.
+
+`books.txt` currently holds **82 books (25,706 pages total)**. Rough size:
+**~12.6 GB at `el`**, ~5.0 GB at `l`, ~2.5 GB at `m`. Make sure the target
+drive has room, and prefer a large disk (e.g. `-OutDir D:\townpage`).
+
 ## Books
 
 | BOOK_ID          | edition                                    | pages |
