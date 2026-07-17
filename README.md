@@ -43,6 +43,28 @@ At `l` ~219 MB total; at `m` ~106 MB total.
 
 ## Usage
 
+### Windows (PowerShell — no extra software needed)
+
+Open PowerShell in this folder and run:
+
+```powershell
+.\download.ps1                       # all 3 books, size el, into .\out
+.\download.ps1 -Size l               # different resolution (el | l | m | t)
+.\download.ps1 -OutDir D:\townpage   # different output folder
+.\download.ps1 -Books 202502_391646  # only specific book id(s)
+```
+
+If you see "running scripts is disabled on this system":
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\download.ps1
+```
+
+(Windows users who prefer the bash script can run `download.sh` from **Git Bash**,
+which ships with Git for Windows and includes `curl`.)
+
+### macOS / Linux / Git Bash (bash)
+
 ```bash
 ./download.sh                 # all three books above, size=el, into ./out
 SIZE=l ./download.sh          # different resolution (el | l | m | t)
@@ -66,5 +88,5 @@ errors, and validates that each response is really a JPEG (the server returns a
 
 ## Requirements
 
-`bash`, `curl`, and coreutils (`seq`, `xargs`, `stat`, `find`). No other
-dependencies.
+- **Windows:** `download.ps1` — Windows PowerShell 5.1 (built in) or PowerShell 7+. Nothing to install.
+- **macOS / Linux / Git Bash:** `download.sh` — `bash`, `curl`, and coreutils (`seq`, `xargs`, `stat`, `find`). No other dependencies.
