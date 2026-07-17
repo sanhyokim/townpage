@@ -86,6 +86,22 @@ The script skips files it has already downloaded, retries transient network
 errors, and validates that each response is really a JPEG (the server returns a
 9.5 KB HTML error page for out‑of‑range pages, which is rejected).
 
+## OCR・リスト化ワークフロー
+
+ダウンロードしたページ画像を業種別リスト（CSV）に変換する作業用のフォルダ構成:
+
+```
+images/<BOOK_ID>/el_<PAGE>.jpg   ← 処理したいページ画像をここにコミットする
+data/<BOOK_ID>/pageNNN.csv      ← 抽出結果（紙面の印刷ページ番号ごと）
+```
+
+- 画像は `download.sh` / `download.ps1` の出力（`out/`）からそのままコピーして
+  コミットしてよい（el サイズで1冊 ~250 MB。GitHub の上限内）。
+- CSV の列順・抽出ルールは [`data/README.md`](data/README.md) を参照。
+- 注意: Claude のリモート実行環境からは `www.denwacho.ne.jp` への直接アクセスが
+  ネットワークポリシーで遮断されているため、処理対象の画像はこのリポジトリに
+  置く必要がある（または環境設定で同ドメインを許可する）。
+
 ## Requirements
 
 - **Windows:** `download.ps1` — Windows PowerShell 5.1 (built in) or PowerShell 7+. Nothing to install.
